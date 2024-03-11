@@ -5,7 +5,7 @@
 
 # Quickstart
 Install using pip:
-This will install uvicorn with minimal (pure Python) dependencies.
+This will install ZhiZengZeng Python SDK with minimal (pure Python) dependencies.
 ```
 $ pip3 install zhizengzeng
 ```
