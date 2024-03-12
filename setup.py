@@ -2,7 +2,7 @@ from setuptools import setup, find_packages
 
 setup(
     name="zhizengzeng",
-    version="0.1.0",
+    version="0.1.1",
     author="0x24a",
     author_email="tanhanze@qq.com",
     description="A 3rd party SDK for ZhiZengZeng AI",
