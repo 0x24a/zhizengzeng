@@ -1,7 +1,8 @@
-<center>
-<h1>ZhiZengZeng-Python-SDK</h1>
+<h1 align="center">ZhiZengZeng-Python-SDK</h1>
+<p align="center">
 <em>✨A simple OpenAI-like SDK for ZhiZengZeng AI.✨</em>
-</center>
+</p>
+
 
 # Quickstart
 Install using pip:

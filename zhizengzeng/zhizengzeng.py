@@ -44,7 +44,7 @@ class ZhiZengZeng(OpenAI):
     def get_balance(self) -> float:
         balance = request("POST", self.base_url.__str__()+"/dashboard/billing/credit_grants", headers={"Content-Type":"application/json","Authorization": f"Bearer {self.api_key}"}).json().get("grants", {}).get("available_amount", None)
         if balance is None:
-            raise APIError("Cannot get balance from zhizengzeng API.")
+            raise APIError("Cannot get balance from zhizengzeng API.", request=balance)
         return balance
     @property
     def balance(self) -> float:
