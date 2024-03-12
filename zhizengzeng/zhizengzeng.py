@@ -1,11 +1,13 @@
 from typing import Mapping
-from httpx import URL
+from httpx import URL, Request
 from httpx._client import Client
 from openai import *
 from openai._base_client import DEFAULT_MAX_RETRIES
 from openai._types import NOT_GIVEN, NotGiven, Timeout
 from httpx import request
-from typing import Union
+from typing import Union, Callable
+
+
 
 class ZhiZengZeng(OpenAI):
     def __init__(
@@ -41,11 +43,30 @@ class ZhiZengZeng(OpenAI):
             http_client=http_client,
             _strict_response_validation=_strict_response_validation,
         )
+        if not self.connected:
+            raise ConnectionError("Cannot connect to ZhiZengZeng API. Try checking your internet connection?")
+        self.get_balance()
+    @property
+    def connected(self) -> bool:
+        #send ping to server
+        try:
+            self._client.send(Request("GET", self.base_url.__str__()))
+            return True
+        except:
+            return False
+
     def get_balance(self) -> float:
         balance = request("POST", self.base_url.__str__()+"/dashboard/billing/credit_grants", headers={"Content-Type":"application/json","Authorization": f"Bearer {self.api_key}"}).json().get("grants", {}).get("available_amount", None)
         if balance is None:
-            raise APIError("Cannot get balance from zhizengzeng API.", request=balance)
+            raise APIError(body=balance,message="Cannot get balance from zhizengzeng API. You can get your API key from http://gpt.zhizengzeng.com/#/my", request=balance)
         return balance
     @property
     def balance(self) -> float:
         return self.get_balance()
+    def _detect_api_key_vaild(self,function) -> Callable:
+        def wrapper(*args, **kwargs):
+            if self.get_balance() is None:
+                raise AuthenticationError(response=None,body=None,message="ZhiZengZeng API key is not set/invalid. You can get your API key from http://gpt.zhizengzeng.com/#/my")
+            return function(*args, **kwargs)
+        return wrapper
+    

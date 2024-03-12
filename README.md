@@ -14,7 +14,7 @@ Create an application, in example.py:
 ```
 from zhizengzeng import ZhiZengZeng
 client = ZhiZengZeng(api_key="YOUR_API_KEY")
-print("GPT says 1+1="+client.completions.create(model="gpt-3.5-turbo-instruct", prompt="1+1=",max_tokens=1).choices[0].text)
+print("GPT says 1+1="+client.completions.create(model="gpt-3.5-turbo-instruct", prompt="1+1=2\n2+2=4\n4+4=8\n1+1=",max_tokens=1).choices[0].text)
 ```
 Remember to replace `YOUR_API_KEY` to your real ZhiZengZeng(Not OpenAI!) token.  
 If nothing was wrong, You should see `GPT says 1+1=2` in your console.
